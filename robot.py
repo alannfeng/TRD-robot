@@ -86,7 +86,7 @@ class MyClient(botpy.Client):
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=0,msg_id=message.id,
+                                                                          msg_type=3,msg_id=message.id,
                                                                           ark=i)
                     _log.info(messageResult)
             else:
@@ -99,7 +99,7 @@ class MyClient(botpy.Client):
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=0,msg_id=message.id,
+                                                                          msg_type=3,msg_id=message.id,
                                                                           ark=i)
                     _log.info(messageResult)
             else:
@@ -112,7 +112,7 @@ class MyClient(botpy.Client):
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=0,msg_id=message.id,
+                                                                          msg_type=3,msg_id=message.id,
                                                                           ark=i)
                     _log.info(messageResult)
             else:
@@ -125,7 +125,7 @@ class MyClient(botpy.Client):
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=0,msg_id=message.id,
+                                                                          msg_type=3,msg_id=message.id,
                                                                           ark=i)
                     _log.info(messageResult)
             else:

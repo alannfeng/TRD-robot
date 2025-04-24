@@ -23,78 +23,124 @@ class MyClient(botpy.Client):
         if "sleep" in message.content:
             await asyncio.sleep(10)
         _log.info(message.author.username)
-        url = "https://api.sc2arcade.com/lobbies/active"
-        payload = {
-            "regionId": "3",
-            "includeMapInfo": "false",
-            "includeSlots": "true",
-            "includeSlotsProfile": "true",
-            "includeSlotsJoinInfo": "true",
-            "includeJoinHistory": "false",
-            "recentlyClosedThreshold": "200"
-        }
-        headers = {
-            'accept': '*/*'
-        }
-        response = requests.request("GET", url, headers=headers, data=payload)
-        req = []
-        for i in response.json():
-            if i["mapBnetId"] == 158546:
-                _log.info(i)
-                txt = f"房名：{i['lobbyTitle']}\n房主：{i['hostName']}\n人数：{i['slotsHumansTaken']}/{i['slotsHumansTotal']}\n"
-                num = 0
-                for j in i["slots"]:
-                    num += 1
-                    if j["kind"] == "human":
-                        txt += f"玩家{num}：{j['name']}\n"
-                req.append(txt)
-        if len(req) > 0:
-            anw = ""
-            for i in req:
-                anw += "\n"+i+"\n"
+        content = message.content
+        if "/TRD " in content:
+            anw = await self.get_aqi("TRD")
+            if len(anw) > 0:
+                for i in anw:
+                    messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                                    msg_id=message.id,
+                                                                    ark=i)
+                    _log.info(messageResult)
+            else:
+                messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                                msg_id=message.id,
+                                                                content=f"当前没有'the rising dead_汉译'公共房间")
+                _log.info(messageResult)
+        elif "/KR " in content:
+            anw = await self.get_aqi("KR")
+            if len(anw) > 0:
+                for i in anw:
+                    messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                                    msg_id=message.id,
+                                                                    ark=i)
+                    _log.info(messageResult)
+            else:
+                messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                                msg_id=message.id,
+                                                                content=f"当前亚服没有'the rising dead T'公共房间")
+                _log.info(messageResult)
+        elif "/EU " in content:
+            anw = await self.get_aqi("EU")
+            if len(anw) > 0:
+                for i in anw:
+                    messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                                    msg_id=message.id,
+                                                                    ark=i)
+                    _log.info(messageResult)
+            else:
+                messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                                msg_id=message.id,
+                                                                content=f"当前欧服没有'-the rising dead-'公共房间")
+                _log.info(messageResult)
+        elif "/US " in content:
+            anw = await self.get_aqi("US")
+            if len(anw) > 0:
+                for i in anw:
+                    messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                                    msg_id=message.id,
+                                                                    ark=i)
+                    _log.info(messageResult)
+            else:
+                messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                                msg_id=message.id,
+                                                                content=f"当前美服没有'-the rising dead-'公共房间")
+                _log.info(messageResult)
         else:
-            anw = "没有'the rising dead_汉译'房间"
-        await message.reply(content=f"机器人{self.robot.name}收到你的@消息了:\n{anw}")
+            await message.reply(content=f"咕咕")
 
     async def on_group_at_message_create(self, message: GroupMessage):
-        url = "https://api.sc2arcade.com/lobbies/active"
-        payload = {
-            "regionId": "3",
-            "includeMapInfo": "false",
-            "includeSlots": "true",
-            "includeSlotsProfile": "true",
-            "includeSlotsJoinInfo": "true",
-            "includeJoinHistory": "false",
-            "recentlyClosedThreshold": "20"
-        }
-        headers = {
-            'accept': '*/*'
-        }
-        response = requests.request("GET", url, headers=headers, data=payload)
-        req = []
-        for i in response.json():
-            if i["mapBnetId"] == 158546:
-                txt = f"房名：{i['lobbyTitle']}\n房主：{i['hostName']}\n人数：{i['slotsHumansTaken']}/{i['slotsHumansTotal']}\n"
-                for j in i["slots"]:
-                    if j["kind"] == "human":
-                        txt += f"玩家：{j['name']}\n"
-                req.append(txt)
-        if len(req) > 0:
-            anw = ""
-            for i in req:
-                anw += "\n" + i + "\n"
+        content = message.content
+        if "/TRD " in content:
+            anw = await self.get_aqi("TRD")
+            if len(anw) > 0:
+                for i in anw:
+                    messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                          msg_type=0,msg_id=message.id,
+                                                                          ark=i)
+                    _log.info(messageResult)
+            else:
+                messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                      msg_type=0,msg_id=message.id,
+                                                                      content=f"当前没有'the rising dead_汉译'房间")
+                _log.info(messageResult)
+        elif "/KR " in content:
+            anw = await self.get_aqi("KR")
+            if len(anw) > 0:
+                for i in anw:
+                    messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                          msg_type=0,msg_id=message.id,
+                                                                          ark=i)
+                    _log.info(messageResult)
+            else:
+                messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                      msg_type=0,msg_id=message.id,
+                                                                      content=f"当前亚服没有'the rising dead T'公共房间")
+                _log.info(messageResult)
+        elif "/EU " in content:
+            anw = await self.get_aqi("EU")
+            if len(anw) > 0:
+                for i in anw:
+                    messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                          msg_type=0,msg_id=message.id,
+                                                                          ark=i)
+                    _log.info(messageResult)
+            else:
+                messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                      msg_type=0,msg_id=message.id,
+                                                                      content=f"当前欧服没有'-the rising dead-'公共房间")
+                _log.info(messageResult)
+        elif "/US " in content:
+            anw = await self.get_aqi("US")
+            if len(anw) > 0:
+                for i in anw:
+                    messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                          msg_type=0,msg_id=message.id,
+                                                                          ark=i)
+                    _log.info(messageResult)
+            else:
+                messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                      msg_type=0,msg_id=message.id,
+                                                                      content=f"当前美服没有'-the rising dead-'公共房间")
+                _log.info(messageResult)
         else:
-            anw = "没有'the rising dead_汉译'房间"
-
-        messageResult = await message._api.post_group_message(
-            group_openid=message.group_openid,
-              msg_type=0,
-              msg_id=message.id,
-              content=f"收到了消息：{anw}")
-        _log.info(messageResult)
+            messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                      msg_type=0,msg_id=message.id,
+                                                                      content=f"咕咕")
+            _log.info(messageResult)
 
     @staticmethod
-    async def get_aqi():
+    async def get_aqi(region):
         """
         获取空气质量（aqi）数据
 
@@ -140,9 +186,21 @@ class MyClient(botpy.Client):
     ]
   }
         """
+        if region == "KR":
+            regionId = "3"
+            mapBnetId = 135435
+        elif region == "EU":
+            regionId = "2"
+            mapBnetId = 207565
+        elif region == "US":
+            regionId = "1"
+            mapBnetId = 296886
+        elif region == "TRD":
+            regionId = "3"
+            mapBnetId = 158546
         url = "https://api.sc2arcade.com/lobbies/active"
         payload = {
-            "regionId": "3",
+            "regionId": regionId,
             "includeMapInfo": "false",
             "includeSlots": "true",
             "includeSlotsProfile": "true",
@@ -156,24 +214,16 @@ class MyClient(botpy.Client):
         response = requests.request("GET", url, headers=headers, data=payload)
         req = []
         for i in response.json():
-            if i["mapBnetId"] == 158546:
+            if i["mapBnetId"] == mapBnetId:
                 payload = {
-                    "template_id": 37,
+                    "template_id": 23,
                     "kv": [
-                        {"key": "#METATITLE#", "value": "通知提醒"},
-                        {"key": "#PROMPT#", "value": "标题"},
-                        {"key": "#TITLE#", "value": "标题"},
-                        {"key": "#METACOVER#", "value": "https://vfiles.gtimg.cn/vupload/20211029/bf0ed01635493790634.jpg"},
-                    ],
-                }
-                _log.info(i)
-                txt = f"房名：{i['lobbyTitle']}\n房主：{i['hostName']}\n人数：{i['slotsHumansTaken']}/{i['slotsHumansTotal']}\n"
-                num = 0
-                for j in i["slots"]:
-                    num += 1
-                    if j["kind"] == "human":
-                        txt += f"玩家{num}：{j['name']}\n"
-                req.append(txt)
+                        {"key": "#DESC#", "value": f"房间名：{i['lobbyTitle']}"},
+                        {"key": "#PROMPT#", "value": f"房主：{i['hostName']}\n人数：({i['slotsHumansTaken']}/{i['slotsHumansTotal']})\n"},
+                        {"key": "#LIST#", "obj": [{"obj_kv": [{"key": "desc", "value": f"玩家：{j['name']}"}]} for j in i["slots"]]}
+                        ]
+                        }
+                req.append(payload)
         return req
 
 if __name__ == "__main__":

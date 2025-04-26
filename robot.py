@@ -2,6 +2,7 @@
 import asyncio
 import os
 import requests
+import random
 
 import botpy
 from botpy import logging
@@ -11,6 +12,7 @@ from botpy.message import  GroupMessage, Message
 test_config = read(os.path.join(os.path.dirname(__file__), "config.yaml"))
 
 _log = logging.get_logger()
+def_return = ["咕咕", "屁都没有","在蟑螂啃到队友前，搀扶他可以防止他逃走并且收到额外50%伤害","无视体积的跟随(xz)‘很’好用"]
 
 
 class MyClient(botpy.Client):
@@ -77,7 +79,7 @@ class MyClient(botpy.Client):
                                                                 content=f"当前美服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
         else:
-            await message.reply(content=f"咕咕")
+            await message.reply(content=f"{def_return[ random.randint(0, len(def_return) - 1)]}")
 
     async def on_group_at_message_create(self, message: GroupMessage):
         content = message.content
@@ -136,15 +138,15 @@ class MyClient(botpy.Client):
         else:
             messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
-                                                                      content=f"咕咕")
+                                                                      content=f"{def_return[ random.randint(0, len(def_return) - 1)]}")
             _log.info(messageResult)
 
     @staticmethod
     async def get_aqi(region):
         """
-        获取空气质量（aqi）数据
+        获取星际争霸二公开房间（aqi）数据
 
-        :return: 返回空气质量数据的json���象
+        :return: 返回星际争霸二目标公开房间的json列表
         返回示例
         {
     "regionId": 3,

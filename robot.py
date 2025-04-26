@@ -45,7 +45,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    content=f"\n{i})
+                                                                    content=f"\n{i}")
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
@@ -58,7 +58,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    content=f"\n{i})
+                                                                    content=f"\n{i}")
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
@@ -71,7 +71,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    content=f"\n{i})
+                                                                    content=f"\n{i}")
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
@@ -84,7 +84,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    content=f"\n{i})
+                                                                    content=f"\n{i}")
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
@@ -102,7 +102,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
-                                                                          content=f"\n{i})
+                                                                          content=f"\n{i}")
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
@@ -115,7 +115,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
-                                                                          content=f"\n{i})
+                                                                          content=f"\n{i}")
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
@@ -128,7 +128,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
-                                                                          content=f"\n{i})
+                                                                          content=f"\n{i}")
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,

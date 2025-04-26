@@ -10,9 +10,22 @@ from botpy.ext.cog_yaml import read
 from botpy.message import  GroupMessage, Message
 
 test_config = read(os.path.join(os.path.dirname(__file__), "config.yaml"))
-
+#def_return = read(os.path.join(os.path.dirname(__file__), "def_return.yaml"))
 _log = logging.get_logger()
-def_return = ["咕咕", "屁都没有","在蟑螂啃到队友前，搀扶他可以防止他逃走并且收到额外50%伤害","无视体积的跟随(xz)‘很’好用"]
+def_return = ["咕咕", 
+              "屁都没有",
+              "“长官，搀扶除了让一个废物变成两个废物还有什么用呢？”\n“你可以防止他逃走并且收到额外50%伤害”",
+              "“跟随(xz)可以短期无视体积，超好用的”\n“所以那天xz把我挤进雷区的也是你咯？”",
+              "单生10波11波14波跳下一波时间固定为3分30秒，如果熊提前死可能会提前",
+              "单噩10波11波14波跳下一波时间固定为3分03秒，如果熊提前死可能会提前",
+              "重装可以e、v连续切换快速耗蓝帮助工头升温",
+              "找不到模块？瞧瞧无人机下面",
+              "“真的，那天我真的遇到野生的好几个连锁叠一起”\n“你想没想过，也许~嗯~只是有人把捡起的雷下了上去~”",
+              "“长官，身为队长的，匹到了十一个嫌简单而单走老登怎么办”\n“试试在2波末输入-vet，哦对-double也可以二波后开”",
+              "上将  汪小白  已阵亡",
+              "“左边e排撤离点都沙袋和车记得拍掉”QAQ将军一脸严肃的提醒新来的士官“别问为什么”",
+              "“你觉得玩重装最大的幻觉是什么”\n“总觉得殿后的自己走的了”",
+              ]
 
 
 class MyClient(botpy.Client):
@@ -32,7 +45,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    content=i)
+                                                                    content=f"\n{i})
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
@@ -45,7 +58,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    content=i)
+                                                                    content=f"\n{i})
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
@@ -58,7 +71,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    content=i)
+                                                                    content=f"\n{i})
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
@@ -71,7 +84,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    content=i)
+                                                                    content=f"\n{i})
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
@@ -79,7 +92,7 @@ class MyClient(botpy.Client):
                                                                 content=f"当前美服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
         else:
-            await message.reply(content=f"{def_return[ random.randint(0, len(def_return) - 1)]}")
+            await message.reply(content=f"\n{def_return[ random.randint(0, len(def_return) - 1)]}")
 
     async def on_group_at_message_create(self, message: GroupMessage):
         content = message.content
@@ -89,7 +102,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
-                                                                          content=i)
+                                                                          content=f"\n{i})
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
@@ -102,7 +115,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
-                                                                          content=i)
+                                                                          content=f"\n{i})
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
@@ -115,7 +128,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
-                                                                          content=i)
+                                                                          content=f"\n{i})
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
@@ -128,7 +141,7 @@ class MyClient(botpy.Client):
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
-                                                                          content=i)
+                                                                          content=f"\n{i}")
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
@@ -138,15 +151,15 @@ class MyClient(botpy.Client):
         else:
             messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
-                                                                      content=f"{def_return[ random.randint(0, len(def_return) - 1)]}")
+                                                                      content=f"\n{def_return[ random.randint(0, len(def_return) - 1)]}")
             _log.info(messageResult)
 
     @staticmethod
     async def get_aqi(region):
         """
-        获取星际争霸二公开房间（aqi）数据
+        获取空气质量（aqi）数据
 
-        :return: 返回星际争霸二目标公开房间的json列表
+        :return: 返回空气质量数据的json���象
         返回示例
         {
     "regionId": 3,

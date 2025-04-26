@@ -24,52 +24,52 @@ class MyClient(botpy.Client):
             await asyncio.sleep(10)
         _log.info(message.author.username)
         content = message.content
-        if "/TRD " in content:
+        if "/TRD" in content:
             anw = await self.get_aqi("TRD")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    ark=i)
+                                                                    content=i)
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                 msg_id=message.id,
                                                                 content=f"当前没有'the rising dead_汉译'公共房间")
                 _log.info(messageResult)
-        elif "/KR " in content:
+        elif "/KR" in content:
             anw = await self.get_aqi("KR")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    ark=i)
+                                                                    content=i)
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                 msg_id=message.id,
                                                                 content=f"当前亚服没有'the rising dead T'公共房间")
                 _log.info(messageResult)
-        elif "/EU " in content:
+        elif "/EU" in content:
             anw = await self.get_aqi("EU")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    ark=i)
+                                                                    content=i)
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                 msg_id=message.id,
                                                                 content=f"当前欧服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
-        elif "/US " in content:
+        elif "/US" in content:
             anw = await self.get_aqi("US")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
-                                                                    ark=i)
+                                                                    content=i)
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
@@ -81,52 +81,52 @@ class MyClient(botpy.Client):
 
     async def on_group_at_message_create(self, message: GroupMessage):
         content = message.content
-        if "/TRD " in content:
+        if "/TRD" in content:
             anw = await self.get_aqi("TRD")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=3,msg_id=message.id,
-                                                                          ark=i)
+                                                                          msg_type=0,msg_id=message.id,
+                                                                          content=i)
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
                                                                       content=f"当前没有'the rising dead_汉译'房间")
                 _log.info(messageResult)
-        elif "/KR " in content:
+        elif "/KR" in content:
             anw = await self.get_aqi("KR")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=3,msg_id=message.id,
-                                                                          ark=i)
+                                                                          msg_type=0,msg_id=message.id,
+                                                                          content=i)
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
                                                                       content=f"当前亚服没有'the rising dead T'公共房间")
                 _log.info(messageResult)
-        elif "/EU " in content:
+        elif "/EU" in content:
             anw = await self.get_aqi("EU")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=3,msg_id=message.id,
-                                                                          ark=i)
+                                                                          msg_type=0,msg_id=message.id,
+                                                                          content=i)
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
                                                                       content=f"当前欧服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
-        elif "/US " in content:
+        elif "/US" in content:
             anw = await self.get_aqi("US")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=3,msg_id=message.id,
-                                                                          ark=i)
+                                                                          msg_type=0,msg_id=message.id,
+                                                                          content=i)
                     _log.info(messageResult)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
@@ -144,7 +144,7 @@ class MyClient(botpy.Client):
         """
         获取空气质量（aqi）数据
 
-        :return: 返回空气质量数据的json对象
+        :return: 返回空气质量数据的json���象
         返回示例
         {
     "regionId": 3,
@@ -212,18 +212,30 @@ class MyClient(botpy.Client):
             'accept': '*/*'
         }
         response = requests.request("GET", url, headers=headers, data=payload)
+        # # ark格式消息返回
+        # req = []
+        # for i in response.json():
+        #     if i["mapBnetId"] == mapBnetId:
+        #         payload = {
+        #             "template_id": 23,
+        #             "kv": [
+        #                 {"key": "#DESC#", "value": f"房间名：{i['lobbyTitle']}"},
+        #                 {"key": "#PROMPT#", "value": f"房主：{i['hostName']}\n人数：({i['slotsHumansTaken']}/{i['slotsHumansTotal']})\n"},
+        #                 {"key": "#LIST#", "obj": [{"obj_kv": [{"key": "desc", "value": f"玩家：{j['name']}"}]} for j in i["slots"]]}
+        #                 ]
+        #                 }
+        #         req.append(payload)
         req = []
         for i in response.json():
             if i["mapBnetId"] == mapBnetId:
-                payload = {
-                    "template_id": 23,
-                    "kv": [
-                        {"key": "#DESC#", "value": f"房间名：{i['lobbyTitle']}"},
-                        {"key": "#PROMPT#", "value": f"房主：{i['hostName']}\n人数：({i['slotsHumansTaken']}/{i['slotsHumansTotal']})\n"},
-                        {"key": "#LIST#", "obj": [{"obj_kv": [{"key": "desc", "value": f"玩家：{j['name']}"}]} for j in i["slots"]]}
-                        ]
-                        }
-                req.append(payload)
+                _log.info(i)
+                txt = f"房名：{i['lobbyTitle']}\n房主：{i['hostName']}\n人数：({i['slotsHumansTaken']}/{i['slotsHumansTotal']})\n"
+                num = 0
+                for j in i["slots"]:
+                    num += 1
+                    if j["kind"] == "human":
+                        txt += f"玩家{num}：{j['name']}\n"
+                req.append(txt)
         return req
 
 if __name__ == "__main__":
@@ -235,4 +247,4 @@ if __name__ == "__main__":
     # 通过kwargs，设置需要监听的事件通道
     # intents = botpy.Intents.default()
     client = MyClient(intents=intents)
-    client.run(appid="102089878", secret="C2sjaRI90skcUMF81ungaUOIC61wrmhc")
+    client.run(appid="102089878", secret="Sk2KcuDWp8Rk3Nh1LfzKf0Lg1Mi4Qm8U")

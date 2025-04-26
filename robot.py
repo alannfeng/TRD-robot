@@ -159,7 +159,7 @@ class MyClient(botpy.Client):
         """
         获取空气质量（aqi）数据
 
-        :return: 返回空气质量数据的json���象
+        :return: 返回空气质量数据的json对象
         返回示例
         {
     "regionId": 3,

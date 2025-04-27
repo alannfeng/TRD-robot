@@ -258,7 +258,6 @@ class MyClient(botpy.Client):
         req = []
         for i in response.json():
             if i["mapBnetId"] == mapBnetId:
-                _log.info(i)
                 txt = f"房名：{i['lobbyTitle']}\n房主：{i['hostName']}\n人数：({i['slotsHumansTaken']}/{i['slotsHumansTotal']})\n"
                 num = 0
                 for j in i["slots"]:
@@ -300,7 +299,7 @@ class MyClient(botpy.Client):
         for i in response.json()["results"]:
             if i["status"] == "started":
                 date_string = i["createdAt"]
-                timestamp = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%fZ").timestamp()
+                timestamp = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%fZ").timestamp() + 28800
                 current_timestamp = datetime.now().timestamp()
                 if current_timestamp - timestamp > 100 * 60:
                     break

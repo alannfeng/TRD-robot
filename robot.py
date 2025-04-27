@@ -284,7 +284,7 @@ class MyClient(botpy.Client):
         else:
             regionId = "3"
             mapBnetId = "158546"
-        url = f"https://api.sc2arcade.com/lobbies/history?regionId=2&mapId=140436&includeMatchResult=true&limit=20"
+        url = "https://api.sc2arcade.com/lobbies/history"
         payload = {
             "regionId": regionId,
             "mapId": mapBnetId,
@@ -294,14 +294,14 @@ class MyClient(botpy.Client):
         headers = {
             'accept': '*/*'
         }
-        response = requests.request("GET", url, headers=headers, data=payload)
+        response = requests.request("GET", url, headers=headers, params=payload)
         req = []
         for i in response.json()["results"]:
             if i["status"] == "started":
                 date_string = i["createdAt"]
                 timestamp = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%fZ").timestamp() + 28800
                 current_timestamp = datetime.now().timestamp()
-                if current_timestamp - timestamp > 100 * 60:
+                if int(current_timestamp)-int(timestamp) > 6000:
                     break
                 if not i["match"]:
                     beijing_tz = pytz.timezone('Asia/Shanghai')

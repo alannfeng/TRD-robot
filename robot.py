@@ -3,6 +3,8 @@ import asyncio
 import os
 import requests
 import random
+from datetime import datetime
+import pytz
 
 import botpy
 from botpy import logging
@@ -14,7 +16,7 @@ test_config = read(os.path.join(os.path.dirname(__file__), "config.yaml"))
 _log = logging.get_logger()
 def_return = ["咕咕", 
               "屁都没有",
-              "“长官，搀扶除了让一个废物变成两个废物还有什么用呢？”\n“你可以防止他逃走并且收到额外50%伤害”",
+              "“长官，搀扶除了让一个废物变成两个废物还有什么用呢？”\n“你可以防止他逃走并且受到额外50%伤害”",
               "“跟随(xz)可以短期无视体积，超好用的”\n“所以那天xz把我挤进雷区的也是你咯？”",
               "单生10波11波14波跳下一波时间固定为3分30秒，如果熊提前死可能会提前",
               "单噩10波11波14波跳下一波时间固定为3分03秒，如果熊提前死可能会提前",
@@ -91,6 +93,13 @@ class MyClient(botpy.Client):
                                                                 msg_id=message.id,
                                                                 content=f"当前美服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
+
+        elif "车开走了吗" in content:
+            anw = await self.get_history_aqi("TRD")
+            messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                            msg_id=message.id,
+                                                            content=f"\n{anw}")
+            _log.info(messageResult)
         else:
             await message.reply(content=f"\n{def_return[ random.randint(0, len(def_return) - 1)]}")
 
@@ -148,6 +157,12 @@ class MyClient(botpy.Client):
                                                                       msg_type=0,msg_id=message.id,
                                                                       content=f"当前美服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
+        elif "车开走了吗" in content:
+            anw = await self.get_history_aqi("TRD")
+            messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                  msg_type=0, msg_id=message.id,
+                                                                  content=f"\n{anw}")
+            _log.info(messageResult)
         else:
             messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
@@ -252,6 +267,56 @@ class MyClient(botpy.Client):
                         txt += f"玩家{num}：{j['name']}\n"
                 req.append(txt)
         return req
+
+    @staticmethod
+    async def get_history_aqi(region):
+        if region == "KR":
+            regionId = "3"
+            mapBnetId = "135435"
+        elif region == "EU":
+            regionId = "2"
+            mapBnetId = "207565"
+        elif region == "US":
+            regionId = "1"
+            mapBnetId = "296886"
+        elif region == "TRD":
+            regionId = "3"
+            mapBnetId = "158546"
+        else:
+            regionId = "3"
+            mapBnetId = "158546"
+        url = f"https://api.sc2arcade.com/lobbies/history?regionId=2&mapId=140436&includeMatchResult=true&limit=20"
+        payload = {
+            "regionId": regionId,
+            "mapId": mapBnetId,
+            "includeMatchResult": "true",
+            "limit": "20"
+        }
+        headers = {
+            'accept': '*/*'
+        }
+        response = requests.request("GET", url, headers=headers, data=payload)
+        req = []
+        for i in response.json()["results"]:
+            if i["status"] == "started":
+                date_string = i["createdAt"]
+                timestamp = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%fZ").timestamp()
+                current_timestamp = datetime.now().timestamp()
+                if current_timestamp - timestamp > 100 * 60:
+                    break
+                if not i["match"]:
+                    beijing_tz = pytz.timezone('Asia/Shanghai')
+                    beijing_time = datetime.fromtimestamp(timestamp).astimezone(beijing_tz)
+                    formatted_time = beijing_time.strftime("%Y-%m-%d %H:%M:%S")
+                    txt = f"{formatted_time}开走一车，里面有{i['slotsHumansTotal']}人"
+                    req.append(txt)
+        answer = ""
+        if len(req) > 0:
+            for i in req:
+                answer += i + "\n"
+        else:
+            answer = "没有开走的车"
+        return answer
 
 if __name__ == "__main__":
     # 通过预设置的类型，设置需要监听的事件通道

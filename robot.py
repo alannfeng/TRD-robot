@@ -98,7 +98,7 @@ class MyClient(botpy.Client):
             anw = await self.get_history_aqi("TRD")
             messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                             msg_id=message.id,
-                                                            content=f"\n{anw}")
+                                                            content=anw)
             _log.info(messageResult)
         else:
             await message.reply(content=f"\n{def_return[ random.randint(0, len(def_return) - 1)]}")
@@ -161,7 +161,7 @@ class MyClient(botpy.Client):
             anw = await self.get_history_aqi("TRD")
             messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                   msg_type=0, msg_id=message.id,
-                                                                  content=f"\n{anw}")
+                                                                  content=anw)
             _log.info(messageResult)
         else:
             messageResult = await message._api.post_group_message(group_openid=message.group_openid,
@@ -312,7 +312,7 @@ class MyClient(botpy.Client):
         answer = ""
         if len(req) > 0:
             for i in req:
-                answer += i + "\n"
+                answer += "\n" + i
         else:
             answer = "没有开走的车"
         return answer

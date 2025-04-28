@@ -12,36 +12,9 @@ from botpy.ext.cog_yaml import read
 from botpy.message import  GroupMessage, Message
 
 test_config = read(os.path.join(os.path.dirname(__file__), "config.yaml"))
-#def_return = read(os.path.join(os.path.dirname(__file__), "def_return.yaml"))
+
 _log = logging.get_logger()
-def_return = ["咕咕",
-              "屁都没有",
-              "“长官，搀扶除了让一个废物变成两个废物还有什么用呢？”\n“你可以防止他逃走并且受到额外50%伤害”",
-              "“跟随(xz)可以短期无视体积，超好用的”\n“所以那天xz把我挤进雷区的也是你咯？”",
-              "Tips: 单生10波11波14波跳下一波时间固定为3分30秒，如果熊提前死可能会提前",
-              "Tips: 单噩10波11波14波跳下一波时间固定为3分03秒，如果熊提前死可能会提前",
-              "重装可以e、v连续切换快速耗蓝帮助工头升温",
-              "Tips: 找不到模块？瞧瞧无人机下面",
-              "“真的，那天我真的遇到野生的好几个连锁叠一起”\n“你想没想过，也许~嗯~只是有人把捡起的雷下了上去~”",
-              "“长官，身为队长的，匹到了十一个嫌简单而单走老登怎么办”\n“试试在2波末输入-vet，哦对-double也可以二波后开”",
-              "上将  汪小白  已阵亡",
-              "“左边e排撤离点的沙袋和车记得拍掉”QAQ将军一脸严肃的提醒新来的士官“别问为什么”",
-              "“你觉得玩重装最大的幻觉是什么”\n“总觉得殿后的自己走的了”",
-              "Tips: 兴奋剂快结束时再按奔跑，可以抵消下一个兴奋剂生效时兴奋剂加移速效果降低的效果",
-              "Tips: 医生等级没有到五级而队友骨折时，可以给队友一个兴奋剂让他可以释放技能",
-              "Tips: shift下雷最好保持停火",
-              "Tips: 14波末门口怪压力突然变少的时候，一般是准备跳15波的时候，请立刻做视野和准备下雷",
-              "Tips: 电枪100%碎尸，前期单走不要太舒服",
-              "Tips: 生存55min末，噩梦51min末（可能有波动）是第二轮叛军刷新的时间，1min后会刷一轮坑道和第三波怪",
-              "Tips: 狙击在奔跑过程中开V（开镜）可以固定奔跑状态，但是奔跑依然进入cd，可以存两个奔跑",
-              "信任彼此，凝聚意志，让这最后一战永垂不朽！En taro Tassadar！",
-              "我听说这批榴弹的黑心武器制造商把安全引信拆了！别往自...[爆炸声][泥土碎石掉落声]",
-              "Tips: 通信守家的时候可以用舰炮清理撤离路上的拦路车和沙袋",
-              "Tips: 通信各级空投cd都是一样的，野外搜物资的时候一级和五级空投效果没有什么差别，反正都落不到大队",
-              "Tips: 通信在四级扫描(D)前，主要靠感应(F)判断怪的位置，尤其二波和四波，九波尤为重要",
-              "Tips: 通信九波不要扫大队屁股，身后的球和大白靠感应和路灯，扫描留给大队头顶和前面",
-              "Tips: 通信的直升机支援(XE)是用来快速解围的技能，通常要留给需要快速解决的精英怪。\n建议使用的对象：小跳、大跳、蝎子、伐木机、橙蟑螂、残血球、丝血大白。\n不建议使用的对象：队伍正前方的满血球和满血大白(你想帮他们加速？)",
-              ]
+
 
 
 class MyClient(botpy.Client):
@@ -54,6 +27,9 @@ class MyClient(botpy.Client):
         if "sleep" in message.content:
             await asyncio.sleep(10)
         _log.info(message.author.username)
+        def_return_list = self.load_case_list("./def_return.txt")
+        def_anw_ids = self.load_case_ids("./def_anw.txt")
+
         content = message.content
         if "/TRD" in content:
             anw = await self.get_aqi("TRD")
@@ -115,10 +91,22 @@ class MyClient(botpy.Client):
                                                             content=anw)
             _log.info(messageResult)
         else:
-            await message.reply(content=f"\n{def_return[ random.randint(0, len(def_return) - 1)]}")
+            def_return_open = 0
+            for que, ans in def_anw_ids.items():
+                if que in content:
+                    messageResult = await message._api.post_message(channel_id=message.channel_id,
+                                                                    msg_id=message.id,
+                                                                    content=ans)
+                    _log.info(messageResult)
+                    def_return_open = 1
+                    break
+            if def_return_open == 0:
+                await message.reply(content=f"\n{def_return_list[ random.randint(0, len(def_return_list) - 1)]}")
 
     async def on_group_at_message_create(self, message: GroupMessage):
         content = message.content
+        def_return_list = self.load_case_list("./def_return.txt")
+        def_anw_ids = self.load_case_ids("./def_anw.txt")
         if "/TRD" in content:
             anw = await self.get_aqi("TRD")
             if len(anw) > 0:
@@ -178,10 +166,20 @@ class MyClient(botpy.Client):
                                                                   content=anw)
             _log.info(messageResult)
         else:
-            messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                      msg_type=0,msg_id=message.id,
-                                                                      content=f"\n{def_return[ random.randint(0, len(def_return) - 1)]}")
-            _log.info(messageResult)
+            def_return_open = 0
+            for que, ans in def_anw_ids.items():
+                if que in content:
+                    messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                          msg_type=0,msg_id=message.id,
+                                                                          content=f"\n{ans}")
+                    _log.info(messageResult)
+                    def_return_open = 1
+                    break
+            if def_return_open == 0:
+                messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                  msg_type=0,msg_id=message.id,
+                                                                  content=f"\n{def_return_list[random.randint(0, len(def_return_list) - 1)]}")
+                _log.info(messageResult)
 
     @staticmethod
     async def get_aqi(region):
@@ -330,6 +328,27 @@ class MyClient(botpy.Client):
         else:
             answer = "没有开走的车"
         return answer
+
+    @staticmethod
+    async def load_case_ids(filename) -> dict:
+        case_ids = {}
+        with open(filename, 'r') as f:
+            for line in f:
+                if line.strip():
+                    parts = line.strip().split(',,,,')
+                    if len(parts) == 2:
+                        case_ids[parts[0].strip()] = parts[1].strip()
+        return case_ids
+
+    @staticmethod
+    async def load_case_list(filename):
+        case_list = []
+        with open(filename, 'r') as f:
+            for line in f:
+                if line.strip():
+                    parts = line.strip()
+                    case_list.append(parts)
+        return case_list
 
 if __name__ == "__main__":
     # 通过预设置的类型，设置需要监听的事件通道

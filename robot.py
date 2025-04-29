@@ -94,6 +94,7 @@ class MyClient(botpy.Client):
             def_return_open = 0
             for que, ans in def_anw_ids.items():
                 if que in content:
+                    ans = ans.replace('"n', '\n').replace('\\n', '\n')
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
                                                                     content=ans)
@@ -169,6 +170,7 @@ class MyClient(botpy.Client):
             def_return_open = 0
             for que, ans in def_anw_ids.items():
                 if que in content:
+                    ans = ans.replace('"n', '\n').replace('\\n', '\n')
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
                                                                           content=f"\n{ans}")

@@ -27,8 +27,8 @@ class MyClient(botpy.Client):
         if "sleep" in message.content:
             await asyncio.sleep(10)
         _log.info(message.author.username)
-        def_return_list = self.load_case_list("./def_return.txt")
-        def_anw_ids = self.load_case_ids("./def_anw.txt")
+        def_return_list = await  self.load_case_list("./def_return.txt")
+        def_anw_ids = await  self.load_case_ids("./def_anw.txt")
 
         content = message.content
         if "/TRD" in content:
@@ -106,8 +106,8 @@ class MyClient(botpy.Client):
 
     async def on_group_at_message_create(self, message: GroupMessage):
         content = message.content
-        def_return_list = self.load_case_list("./def_return.txt")
-        def_anw_ids = self.load_case_ids("./def_anw.txt")
+        def_return_list = await  self.load_case_list("./def_return.txt")
+        def_anw_ids = await  self.load_case_ids("./def_anw.txt")
         if "/TRD" in content:
             anw = await self.get_aqi("TRD")
             if len(anw) > 0:

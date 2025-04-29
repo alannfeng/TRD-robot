@@ -94,7 +94,7 @@ class MyClient(botpy.Client):
             def_return_open = 0
             for que, ans in def_anw_ids.items():
                 if que in content:
-                    ans = ans.replace('"n', '\n').replace('\\n', '\n')
+                    ans = ans.replace('\\n', '\n')
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
                                                                     content=ans)
@@ -170,7 +170,7 @@ class MyClient(botpy.Client):
             def_return_open = 0
             for que, ans in def_anw_ids.items():
                 if que in content:
-                    ans = ans.replace('"n', '\n').replace('\\n', '\n')
+                    ans = ans.replace('\\n', '\n')
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
                                                                           content=f"\n{ans}")
@@ -360,5 +360,6 @@ if __name__ == "__main__":
 
     # 通过kwargs，设置需要监听的事件通道
     # intents = botpy.Intents.default()
+    # client = MyClient(intents=intents, is_sandbox=True)
     client = MyClient(intents=intents)
     client.run(appid=test_config["appid"], secret=test_config["secret"])

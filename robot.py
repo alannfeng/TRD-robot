@@ -102,7 +102,9 @@ class MyClient(botpy.Client):
                     def_return_open = 1
                     break
             if def_return_open == 0:
-                await message.reply(content=f"\n{def_return_list[ random.randint(0, len(def_return_list) - 1)]}")
+                ans = def_return_list[random.randint(0, len(def_return_list) - 1)]
+                ans = ans.replace('\\n', '\n')
+                await message.reply(content=f"\n{ans}")
 
     async def on_group_at_message_create(self, message: GroupMessage):
         content = message.content
@@ -178,9 +180,11 @@ class MyClient(botpy.Client):
                     def_return_open = 1
                     break
             if def_return_open == 0:
+                ans = def_return_list[random.randint(0, len(def_return_list) - 1)]
+                ans = ans.replace('\\n', '\n')
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                   msg_type=0,msg_id=message.id,
-                                                                  content=f"\n{def_return_list[random.randint(0, len(def_return_list) - 1)]}")
+                                                                  content=f"\n{ans}")
                 _log.info(messageResult)
 
     @staticmethod

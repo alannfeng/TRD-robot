@@ -196,67 +196,80 @@ class MyClient(botpy.Client):
             if len(anw) > 0:
                 for i in anw:
                     _log.info("发送/TRD房间私信")
-                    await message._api.post_c2c_message( openid=message.author.user_openid, msg_type=0,
-                                                         msg_id=message.id, content=f"\n{i}")
+                    messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                        msg_id=message.id, content=i)
+                    _log.info(messageResult)
             else:
-                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                    msg_id=message.id, content=f"当前没有'the rising dead_汉译'房间")
+                messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                    msg_id=message.id,
+                                                                    content=f"当前没有'the rising dead_汉译'房间")
+                _log.info(messageResult)
 
         elif "/KR" in content:
             anw = await self.get_aqi("KR")
             if len(anw) > 0:
                 for i in anw:
                     _log.info("发送/KR房间私信")
-                    await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                        msg_id=message.id, content=f"\n{i}")
+                    messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                        msg_id=message.id, content=i)
+                    _log.info(messageResult)
             else:
-                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                    msg_id=message.id, content=f"当前亚服没有'the rising dead T'公共房间")
+                messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                    msg_id=message.id,
+                                                                    content=f"当前亚服没有'the rising dead T'公共房间")
+                _log.info(messageResult)
 
         elif "/EU" in content:
             anw = await self.get_aqi("EU")
             if len(anw) > 0:
                 for i in anw:
                     _log.info("发送/EU房间私信")
-                    await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                        msg_id=message.id, content=f"\n{i}")
+                    messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                        msg_id=message.id, content=i)
+                    _log.info(messageResult)
             else:
-                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                    msg_id=message.id,
-                                                    content=f"当前欧服没有'-the rising dead-'公共房间")
+                messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                    msg_id=message.id,
+                                                                    content=f"当前欧服没有'-the rising dead-'公共房间")
+                _log.info(messageResult)
 
         elif "/US" in content:
             anw = await self.get_aqi("US")
             if len(anw) > 0:
                 for i in anw:
                     _log.info("发送/US房间私信")
-                    await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                        msg_id=message.id, content=f"\n{i}")
+                    messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                        msg_id=message.id, content=i)
+                    _log.info(messageResult)
             else:
-                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                    msg_id=message.id,
-                                                    content=f"当前美服没有'-the rising dead-'公共房间")
+                messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                    msg_id=message.id,
+                                                                    content=f"当前美服没有'-the rising dead-'公共房间")
+                _log.info(messageResult)
 
         elif "车开走了吗" in content:
             anw = await self.get_history_aqi("TRD")
             _log.info("发送正在进行的车的私信")
-            await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                msg_id=message.id, content=anw)
+            messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                msg_id=message.id, content=anw)
+            _log.info(messageResult)
 
         else:
             def_return_open = 0
             for que, ans in def_anw_ids.items():
                 if que in content:
                     ans = ans.replace('\\n', '\n')
-                    await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                        msg_id=message.id, content=f"\n{ans}")
+                    messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                                        msg_id=message.id, content=ans)
+                    _log.info(messageResult)
                     def_return_open = 1
                     break
             if def_return_open == 0:
                 ans = def_return_list[random.randint(0, len(def_return_list) - 1)]
                 ans = ans.replace('\\n', '\n')
                 messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
-                                                    msg_id=message.id, content=f"\n{ans}")
+                                                                    msg_id=message.id,
+                                                                    content=ans)
                 _log.info(messageResult)
 
 

@@ -32,52 +32,68 @@ class MyClient(botpy.Client):
 
         content = message.content
         if "/TRD" in content:
-            anw = await self.get_aqi("TRD")
+            anw, error = await self.get_aqi("TRD")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
                                                                     content=f"\n{i}")
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_message(channel_id=message.channel_id,
+                                                msg_id=message.id,
+                                                content=error)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                 msg_id=message.id,
                                                                 content=f"当前没有'the rising dead_汉译'公共房间")
                 _log.info(messageResult)
         elif "/KR" in content:
-            anw = await self.get_aqi("KR")
+            anw, error = await self.get_aqi("KR")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
                                                                     content=f"\n{i}")
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_message(channel_id=message.channel_id,
+                                                msg_id=message.id,
+                                                content=error)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                 msg_id=message.id,
                                                                 content=f"当前亚服没有'the rising dead T'公共房间")
                 _log.info(messageResult)
         elif "/EU" in content:
-            anw = await self.get_aqi("EU")
+            anw, error = await self.get_aqi("EU")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
                                                                     content=f"\n{i}")
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_message(channel_id=message.channel_id,
+                                                msg_id=message.id,
+                                                content=error)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                 msg_id=message.id,
                                                                 content=f"当前欧服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
         elif "/US" in content:
-            anw = await self.get_aqi("US")
+            anw, error = await self.get_aqi("US")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                     msg_id=message.id,
                                                                     content=f"\n{i}")
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_message(channel_id=message.channel_id,
+                                                msg_id=message.id,
+                                                content=error)
             else:
                 messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                                 msg_id=message.id,
@@ -85,7 +101,9 @@ class MyClient(botpy.Client):
                 _log.info(messageResult)
 
         elif "车开走了吗" in content:
-            anw = await self.get_history_aqi("TRD")
+            anw, error = await self.get_history_aqi("TRD")
+            if error != "":
+                anw = error
             messageResult = await message._api.post_message(channel_id=message.channel_id,
                                                             msg_id=message.id,
                                                             content=anw)
@@ -111,59 +129,77 @@ class MyClient(botpy.Client):
         def_return_list = await  self.load_case_list("./def_return.txt")
         def_anw_ids = await  self.load_case_ids("./def_anw.txt")
         if "/TRD" in content:
-            anw = await self.get_aqi("TRD")
+            anw, error = await self.get_aqi("TRD")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
                                                                           content=f"\n{i}")
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_group_message(group_openid=message.group_openid,
+                                                      msg_type=0, msg_id=message.id,
+                                                      content=error)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
                                                                       content=f"当前没有'the rising dead_汉译'房间")
                 _log.info(messageResult)
         elif "/KR" in content:
-            anw = await self.get_aqi("KR")
+            anw, error = await self.get_aqi("KR")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
                                                                           content=f"\n{i}")
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_group_message(group_openid=message.group_openid,
+                                                      msg_type=0, msg_id=message.id,
+                                                      content=error)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
                                                                       content=f"当前亚服没有'the rising dead T'公共房间")
                 _log.info(messageResult)
         elif "/EU" in content:
-            anw = await self.get_aqi("EU")
+            anw, error = await self.get_aqi("EU")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
                                                                           content=f"\n{i}")
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_group_message(group_openid=message.group_openid,
+                                                      msg_type=0, msg_id=message.id,
+                                                      content=error)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
                                                                       content=f"当前欧服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
         elif "/US" in content:
-            anw = await self.get_aqi("US")
+            anw, error = await self.get_aqi("US")
             if len(anw) > 0:
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                           msg_type=0,msg_id=message.id,
                                                                           content=f"\n{i}")
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_group_message(group_openid=message.group_openid,
+                                                      msg_type=0, msg_id=message.id,
+                                                      content=error)
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
                                                                       content=f"当前美服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
         elif "车开走了吗" in content:
-            anw = await self.get_history_aqi("TRD")
+            anw, error = await self.get_history_aqi("TRD")
+            if error != "":
+                anw = error
             messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                   msg_type=0, msg_id=message.id,
                                                                   content=anw)
@@ -192,13 +228,17 @@ class MyClient(botpy.Client):
         def_return_list = await  self.load_case_list("./def_return.txt")
         def_anw_ids = await  self.load_case_ids("./def_anw.txt")
         if "/TRD" in content:
-            anw = await self.get_aqi("TRD")
+            anw, error = await self.get_aqi("TRD")
             if len(anw) > 0:
                 for i in anw:
                     _log.info("发送/TRD房间私信")
                     messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                         msg_id=message.id, content=i)
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                    msg_id=message.id,
+                                                    content=error)
             else:
                 messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                     msg_id=message.id,
@@ -206,13 +246,17 @@ class MyClient(botpy.Client):
                 _log.info(messageResult)
 
         elif "/KR" in content:
-            anw = await self.get_aqi("KR")
+            anw, error = await self.get_aqi("KR")
             if len(anw) > 0:
                 for i in anw:
                     _log.info("发送/KR房间私信")
                     messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                         msg_id=message.id, content=i)
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                    msg_id=message.id,
+                                                    content=error)
             else:
                 messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                     msg_id=message.id,
@@ -220,13 +264,17 @@ class MyClient(botpy.Client):
                 _log.info(messageResult)
 
         elif "/EU" in content:
-            anw = await self.get_aqi("EU")
+            anw, error = await self.get_aqi("EU")
             if len(anw) > 0:
                 for i in anw:
                     _log.info("发送/EU房间私信")
                     messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                         msg_id=message.id, content=i)
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                    msg_id=message.id,
+                                                    content=error)
             else:
                 messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                     msg_id=message.id,
@@ -234,13 +282,17 @@ class MyClient(botpy.Client):
                 _log.info(messageResult)
 
         elif "/US" in content:
-            anw = await self.get_aqi("US")
+            anw, error = await self.get_aqi("US")
             if len(anw) > 0:
                 for i in anw:
                     _log.info("发送/US房间私信")
                     messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                         msg_id=message.id, content=i)
                     _log.info(messageResult)
+            elif error != "":
+                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                    msg_id=message.id,
+                                                    content=error)
             else:
                 messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                     msg_id=message.id,
@@ -248,7 +300,9 @@ class MyClient(botpy.Client):
                 _log.info(messageResult)
 
         elif "车开走了吗" in content:
-            anw = await self.get_history_aqi("TRD")
+            anw, error = await self.get_history_aqi("TRD")
+            if error != "":
+                anw = error
             _log.info("发送正在进行的车的私信")
             messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                 msg_id=message.id, content=anw)
@@ -360,16 +414,22 @@ class MyClient(botpy.Client):
         #                 }
         #         req.append(payload)
         req = []
-        for i in response.json():
-            if i["mapBnetId"] == mapBnetId:
-                txt = f"房名：{i['lobbyTitle']}\n房主：{i['hostName']}\n人数：({i['slotsHumansTaken']}/{i['slotsHumansTotal']})\n"
-                num = 0
-                for j in i["slots"]:
-                    num += 1
-                    if j["kind"] == "human":
-                        txt += f"玩家{num}：{j['name']}\n"
-                req.append(txt)
-        return req
+        error = ""
+        if response.status_code != 200:
+            error = "数据网站异常，暂不可用"
+        elif len(response.json()) == 0:
+            error = "数据网站异常，暂不可用"
+        else:
+            for i in response.json():
+                if i["mapBnetId"] == mapBnetId:
+                    txt = f"房名：{i['lobbyTitle']}\n房主：{i['hostName']}\n人数：({i['slotsHumansTaken']}/{i['slotsHumansTotal']})\n"
+                    num = 0
+                    for j in i["slots"]:
+                        num += 1
+                        if j["kind"] == "human":
+                            txt += f"玩家{num}：{j['name']}\n"
+                    req.append(txt)
+        return req, error
 
     @staticmethod
     async def get_history_aqi(region):
@@ -400,26 +460,33 @@ class MyClient(botpy.Client):
         }
         response = requests.request("GET", url, headers=headers, params=payload)
         req = []
-        for i in response.json()["results"]:
-            if i["status"] == "started":
-                date_string = i["createdAt"]
-                timestamp = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%fZ").timestamp() + 28800
-                current_timestamp = datetime.now().timestamp()
-                if int(current_timestamp)-int(timestamp) > 6000:
-                    break
-                if not i["match"]:
-                    beijing_tz = pytz.timezone('Asia/Shanghai')
-                    beijing_time = datetime.fromtimestamp(timestamp).astimezone(beijing_tz)
-                    formatted_time = beijing_time.strftime("%Y-%m-%d %H:%M:%S")
-                    txt = f"{formatted_time}开走一车，里面有{i['slotsHumansTotal']}人"
-                    req.append(txt)
+        error = ""
+        if response.status_code != 200:
+            error = "数据网站异常，暂不可用"
+        elif len(response.json()) == 0:
+            error = "数据网站异常，暂不可用"
+        else:
+            for i in response.json()["results"]:
+                if i["status"] == "started":
+                    date_string = i["createdAt"]
+                    timestamp = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%fZ").timestamp() + 28800
+                    current_timestamp = datetime.now().timestamp()
+                    if int(current_timestamp) - int(timestamp) > 6000:
+                        break
+                    if not i["match"]:
+                        beijing_tz = pytz.timezone('Asia/Shanghai')
+                        beijing_time = datetime.fromtimestamp(timestamp).astimezone(beijing_tz)
+                        formatted_time = beijing_time.strftime("%Y-%m-%d %H:%M:%S")
+                        txt = f"{formatted_time}开走一车，里面有{i['slotsHumansTotal']}人"
+                        req.append(txt)
+
         answer = ""
         if len(req) > 0:
             for i in req:
                 answer += "\n" + i
         else:
             answer = "没有开走的车"
-        return answer
+        return answer, error
 
     @staticmethod
     async def load_case_ids(filename) -> dict:

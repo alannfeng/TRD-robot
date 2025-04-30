@@ -9,7 +9,7 @@ import pytz
 import botpy
 from botpy import logging
 from botpy.ext.cog_yaml import read
-from botpy.message import  GroupMessage, DirectMessage, Message
+from botpy.message import GroupMessage, C2CMessage, Message
 
 test_config = read(os.path.join(os.path.dirname(__file__), "config.yaml"))
 
@@ -187,14 +187,7 @@ class MyClient(botpy.Client):
                                                                   content=f"\n{ans}")
                 _log.info(messageResult)
 
-    async def on_direct_message_create(self, message: DirectMessage):
-        await self.api.post_dms(
-            guild_id=message.guild_id,
-            content=f"机器人{self.robot.name}收到你的私信了: {message.content}",
-            msg_id=message.id,
-        )
-
-    async def on_direct_message_create(self, message: DirectMessage):
+    async def on_c2c_message_create(self, message: C2CMessage):
         content = message.content
         def_return_list = await  self.load_case_list("./def_return.txt")
         def_anw_ids = await  self.load_case_ids("./def_anw.txt")
@@ -202,70 +195,68 @@ class MyClient(botpy.Client):
             anw = await self.get_aqi("TRD")
             if len(anw) > 0:
                 for i in anw:
-                    dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
                     _log.info("发送/TRD房间私信")
-                    await self.api.post_dms(dms_payload["guild_id"], content=f"\n{i}", msg_id=message.id)
+                    await message._api.post_c2c_message( openid=message.author.user_openid, msg_type=0,
+                                                         msg_id=message.id, content=f"\n{i}")
             else:
-                dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
-                await self.api.post_dms(dms_payload["guild_id"], content=f"当前没有'the rising dead_汉译'房间",
-                                        msg_id=message.id)
+                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                    msg_id=message.id, content=f"当前没有'the rising dead_汉译'房间")
 
         elif "/KR" in content:
             anw = await self.get_aqi("KR")
             if len(anw) > 0:
                 for i in anw:
-                    dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
                     _log.info("发送/KR房间私信")
-                    await self.api.post_dms(dms_payload["guild_id"], content=f"\n{i}", msg_id=message.id)
+                    await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                        msg_id=message.id, content=f"\n{i}")
             else:
-                dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
-                await self.api.post_dms(dms_payload["guild_id"], content=f"当前亚服没有'the rising dead T'公共房间",
-                                        msg_id=message.id)
+                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                    msg_id=message.id, content=f"当前亚服没有'the rising dead T'公共房间")
 
         elif "/EU" in content:
             anw = await self.get_aqi("EU")
             if len(anw) > 0:
                 for i in anw:
-                    dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
                     _log.info("发送/EU房间私信")
-                    await self.api.post_dms(dms_payload["guild_id"], content=f"\n{i}", msg_id=message.id)
+                    await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                        msg_id=message.id, content=f"\n{i}")
             else:
-                dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
-                await self.api.post_dms(dms_payload["guild_id"], content=f"当前欧服没有'-the rising dead-'公共房间",
-                                        msg_id=message.id)
+                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                    msg_id=message.id,
+                                                    content=f"当前欧服没有'-the rising dead-'公共房间")
 
         elif "/US" in content:
             anw = await self.get_aqi("US")
             if len(anw) > 0:
                 for i in anw:
-                    dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
                     _log.info("发送/US房间私信")
-                    await self.api.post_dms(dms_payload["guild_id"], content=f"\n{i}", msg_id=message.id)
+                    await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                        msg_id=message.id, content=f"\n{i}")
             else:
-                dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
-                await self.api.post_dms(dms_payload["guild_id"], content=f"当前美服没有'-the rising dead-'公共房间",
-                                        msg_id=message.id)
+                await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                    msg_id=message.id,
+                                                    content=f"当前美服没有'-the rising dead-'公共房间")
 
         elif "车开走了吗" in content:
-            dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
             anw = await self.get_history_aqi("TRD")
             _log.info("发送正在进行的车的私信")
-            await self.api.post_dms(dms_payload["guild_id"], content=anw, msg_id=message.id)
+            await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                msg_id=message.id, content=anw)
 
         else:
             def_return_open = 0
             for que, ans in def_anw_ids.items():
                 if que in content:
                     ans = ans.replace('\\n', '\n')
-                    dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
-                    await self.api.post_dms(dms_payload["guild_id"], content=f"\n{ans}", msg_id=message.id)
+                    await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                        msg_id=message.id, content=f"\n{ans}")
                     def_return_open = 1
                     break
             if def_return_open == 0:
                 ans = def_return_list[random.randint(0, len(def_return_list) - 1)]
                 ans = ans.replace('\\n', '\n')
-                dms_payload = await self.api.create_dms(message.guild_id, message.author.id)
-                messageResult = await self.api.post_dms(dms_payload["guild_id"], content=f"\n{ans}", msg_id=message.id)
+                messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
+                                                    msg_id=message.id, content=f"\n{ans}")
                 _log.info(messageResult)
 
 
@@ -441,8 +432,8 @@ class MyClient(botpy.Client):
 if __name__ == "__main__":
     # 通过预设置的类型，设置需要监听的事件通道
     intents = botpy.Intents.none()
-    intents.public_guild_messages=True
-    intents.public_messages=True
+    intents.public_guild_messages = True
+    intents.public_messages = True
 
     # 通过kwargs，设置需要监听的事件通道
     # intents = botpy.Intents.default()

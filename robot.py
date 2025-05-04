@@ -468,7 +468,7 @@ class MyClient(botpy.Client):
         else:
             for i in response.json()["results"]:
                 if i["status"] == "started":
-                    date_string = i["createdAt"]
+                    date_string = i["closedAt"]
                     timestamp = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%fZ").timestamp() + 28800
                     current_timestamp = datetime.now().timestamp()
                     if int(current_timestamp) - int(timestamp) > 6000:

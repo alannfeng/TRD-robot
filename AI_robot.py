@@ -217,12 +217,20 @@ class MyClient(botpy.Client):
                     def_return_open = 1
                     break
             if def_return_open == 0:
-                user_id = message.author.member_openid[:11].lower()
-                anw = await self.ask_ai(user_id, content)
-                messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                      msg_type=0, msg_id=message.id,
-                                                                      content=f"\n{anw}")
-                _log.info(messageResult)
+                if content and content.strip():
+                    user_id = message.author.member_openid[:11].lower()
+                    anw = await self.ask_ai(user_id, content)
+                    messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                          msg_type=0, msg_id=message.id,
+                                                                          content=f"\n{anw}")
+                    _log.info(messageResult)
+                else:
+                    ans = def_return_list[random.randint(0, len(def_return_list) - 1)]
+                    ans = ans.replace('\\n', '\n')
+                    messageResult = await message._api.post_group_message(group_openid=message.group_openid,
+                                                                          msg_type=0, msg_id=message.id,
+                                                                          content=f"\n{ans}")
+                    _log.info(messageResult)
 
     async def on_c2c_message_create(self, message: C2CMessage):
         content = message.content
@@ -512,7 +520,7 @@ class MyClient(botpy.Client):
 
     @staticmethod
     async def ask_ai(user_id, ask):
-      url = f"https://yuanbao.tencent.com/api/chat/b0aab8a3-cba1-4cd6-954b-1{user_id}"
+      url = f"https://yuanbao.tencent.com/api/chat/b0aab8a3-cba2-4cd6-954b-1{user_id}"
       payload = {
         "model": "gpt_175B_0404",
         "prompt": ask,

@@ -238,8 +238,8 @@ class MyClient(botpy.Client):
         if "/TRD" in content:
             anw, error = await self.get_aqi("TRD")
             if len(anw) > 0:
+                seq = 1
                 for i in anw:
-                    seq = 1
                     str_seq = str(seq)
                     _log.info("发送/TRD房间私信")
                     messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,

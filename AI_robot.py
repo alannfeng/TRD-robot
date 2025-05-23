@@ -528,7 +528,7 @@ class MyClient(botpy.Client):
 
     @staticmethod
     async def ask_ai(user_id, ask):
-      url = f"https://yuanbao.tencent.com/api/chat/b0aab8a3-cba2-4cd6-954b-1{user_id}"
+      url = f"https://yuanbao.tencent.com/api/chat/b0aab9a3-cba2-4cd6-954b-1{user_id}"
       payload = {
         "model": "gpt_175B_0404",
         "prompt": ask,

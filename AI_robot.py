@@ -132,10 +132,12 @@ class MyClient(botpy.Client):
         if "/TRD" in content:
             anw, error = await self.get_aqi("TRD")
             if len(anw) > 0:
+                seq = 1
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=0,msg_id=message.id,
+                                                                          msg_type=0, msg_id=message.id, msg_seq=seq,
                                                                           content=f"\n{i}")
+                    seq += 1
                     _log.info(messageResult)
             elif error != "":
                 await message._api.post_group_message(group_openid=message.group_openid,
@@ -149,10 +151,12 @@ class MyClient(botpy.Client):
         elif "/KR" in content:
             anw, error = await self.get_aqi("KR")
             if len(anw) > 0:
+                seq = 1
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=0,msg_id=message.id,
+                                                                          msg_type=0, msg_id=message.id, msg_seq=seq,
                                                                           content=f"\n{i}")
+                    seq += 1
                     _log.info(messageResult)
             elif error != "":
                 await message._api.post_group_message(group_openid=message.group_openid,
@@ -166,10 +170,12 @@ class MyClient(botpy.Client):
         elif "/EU" in content:
             anw, error = await self.get_aqi("EU")
             if len(anw) > 0:
+                seq = 1
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=0,msg_id=message.id,
+                                                                          msg_type=0, msg_id=message.id, msg_seq=seq,
                                                                           content=f"\n{i}")
+                    seq += 1
                     _log.info(messageResult)
             elif error != "":
                 await message._api.post_group_message(group_openid=message.group_openid,
@@ -183,10 +189,12 @@ class MyClient(botpy.Client):
         elif "/US" in content:
             anw, error = await self.get_aqi("US")
             if len(anw) > 0:
+                seq = 1
                 for i in anw:
                     messageResult = await message._api.post_group_message(group_openid=message.group_openid,
-                                                                          msg_type=0,msg_id=message.id,
+                                                                          msg_type=0, msg_id=message.id, msg_seq=seq,
                                                                           content=f"\n{i}")
+                    seq += 1
                     _log.info(messageResult)
             elif error != "":
                 await message._api.post_group_message(group_openid=message.group_openid,

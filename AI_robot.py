@@ -416,7 +416,7 @@ class MyClient(botpy.Client):
         headers = {
             'accept': '*/*'
         }
-        response = requests.request("GET", url, headers=headers, data=payload)
+        response = requests.request("GET", url, headers=headers, params=payload)
         # # ark格式消息返回
         # req = []
         # for i in response.json():

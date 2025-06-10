@@ -411,7 +411,6 @@ class MyClient(botpy.Client):
             "includeSlotsProfile": "true",
             "includeSlotsJoinInfo": "true",
             "includeJoinHistory": "false",
-            "recentlyClosedThreshold": "200"
         }
         headers = {
             'accept': '*/*'

@@ -10,6 +10,9 @@ import botpy
 from botpy import logging
 from botpy.ext.cog_yaml import read
 from botpy.message import GroupMessage, C2CMessage, Message
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
 
 test_config = read(os.path.join(os.path.dirname(__file__), "config.yaml"))
 
@@ -164,7 +167,7 @@ class MyClient(botpy.Client):
             else:
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                       msg_type=0,msg_id=message.id,
-                                                                      content=f"当前亚服没有'the rising dead T'公共房间")
+                                                                      content=f"当前亚服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
         elif "/EU" in content:
             anw, error = await self.get_aqi("EU")
@@ -274,7 +277,7 @@ class MyClient(botpy.Client):
             else:
                 messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                     msg_id=message.id,
-                                                                    content=f"当前亚服没有'the rising dead T'公共房间")
+                                                                    content=f"当前亚服没有'-the rising dead-'公共房间")
                 _log.info(messageResult)
 
         elif "/EU" in content:
@@ -396,7 +399,7 @@ class MyClient(botpy.Client):
         """
         if region == "KR":
             regionId = "3"
-            mapBnetId = 135435
+            mapBnetId = 124551
         elif region == "EU":
             regionId = "2"
             mapBnetId = 207565

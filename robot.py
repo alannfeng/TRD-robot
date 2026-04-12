@@ -123,7 +123,9 @@ class MyClient(botpy.Client):
                     def_return_open = 1
                     break
             if def_return_open == 0:
-                ans = def_return_list[random.randint(0, len(def_return_list) - 1)]
+                matched = [item for item in def_return_list if content in item]
+                pool = matched if matched else def_return_list
+                ans = random.choice(pool)
                 ans = ans.replace('\\n', '\n')
                 await message.reply(content=f"\n{ans}")
 
@@ -227,7 +229,9 @@ class MyClient(botpy.Client):
                     def_return_open = 1
                     break
             if def_return_open == 0:
-                ans = def_return_list[random.randint(0, len(def_return_list) - 1)]
+                matched = [item for item in def_return_list if content in item]
+                pool = matched if matched else def_return_list
+                ans = random.choice(pool)
                 ans = ans.replace('\\n', '\n')
                 messageResult = await message._api.post_group_message(group_openid=message.group_openid,
                                                                   msg_type=0,msg_id=message.id,
@@ -342,7 +346,9 @@ class MyClient(botpy.Client):
                     def_return_open = 1
                     break
             if def_return_open == 0:
-                ans = def_return_list[random.randint(0, len(def_return_list) - 1)]
+                matched = [item for item in def_return_list if content in item]
+                pool = matched if matched else def_return_list
+                ans = random.choice(pool)
                 ans = ans.replace('\\n', '\n')
                 messageResult = await message._api.post_c2c_message(openid=message.author.user_openid, msg_type=0,
                                                                     msg_id=message.id,

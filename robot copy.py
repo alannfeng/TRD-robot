@@ -10,7 +10,6 @@ import botpy
 from botpy import logging
 from botpy.ext.cog_yaml import read
 from botpy.message import GroupMessage, C2CMessage, Message
-from botpy.types.message import MarkdownPayload
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -131,7 +130,7 @@ class MyClient(botpy.Client):
                 await message.reply(content=f"\n{ans}")
 
     async def on_group_at_message_create(self, message: GroupMessage):
-        content = message.content
+        content = message.content.strip()
         def_return_list = await  self.load_case_list("./def_return.txt")
         def_anw_ids = await  self.load_case_ids("./def_anw.txt")
         if "/TRD" in content:
@@ -230,7 +229,7 @@ class MyClient(botpy.Client):
                     def_return_open = 1
                     break
             if def_return_open == 0:
-                matched = [item for item in def_return_list if content in item]
+                matched = [item for item in def_return_list if content in item] if content else []  # 如果content为空，则matched为空列表
                 pool = matched if matched else def_return_list
                 ans = random.choice(pool)
                 ans = ans.replace('\\n', '\n')
